@@ -1,0 +1,52 @@
+.img-thumbnail {
+    padding: 0;
+}
+
+.img-thumbnail img {
+    width: 100%;
+}
+
+.card {
+    max-width: 300px;
+    height: fit-content;
+    /* background-color: #dc3545; */
+}
+
+.vote {
+    color: #dc3545 !important;
+}
+
+.date {
+    font-size: 0.6em;
+}
+
+.campgrounds-container {
+    display: flex; 
+    flex-wrap: wrap;
+    /* background-color: #dc3545; */
+}
+
+.form-container {
+    width: 30%; 
+    margin: 25px auto;
+}
+
+.campground-card {
+    align-self: center;
+    min-width: 230px;
+    /* background-color: #dc3545; */
+}
+
+.voting-form {
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.heart {
+    color: #eaeeeb9c;
+    cursor: pointer;
+}
+
+.comments-bg {
+    min-height: 70px;
+}
