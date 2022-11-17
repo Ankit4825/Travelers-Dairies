@@ -1,0 +1,75 @@
+<%- include ('../partials/header') %>
+<%- include ('../partials/navbar') %>
+<%- include ('../partials/flash') %>
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead"><%= campground.name%></p>
+            <div class="list-group">
+                <li class="list-group-item active"><center>Information</center></li>
+                <li class="list-group-item">Pricing: INR <%= campground.price%>(A day)</li>
+                <li class="list-group-item">A post by- <%= campground.author.username %></li>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="img-thumbnail">
+                <img class="img-fluid" src="<%= campground.image%>" alt="<%= campground.name%> image">
+                <div class="figure-caption p-2">
+                    <h4 class="float-right text-monospace">INR <%= campground.price%>(A day)</h4>
+                    <h4 class="text-uppercase text-monospace"><a href="#"><%= campground.name%></a></h4>
+                    <p class="text-capitalize"><%= campground.description%></p>
+                    <p><em>Submitted by <%= campground.author.username %></em></p>
+                    <% if(currentUser && campground.author.id.equals(currentUser._id)) { %>
+                        <a href="/campgrounds/<%= campground._id%>/edit" class="btn btn-warning text-muted btn-sm">EDIT</a>
+                        <form action="/campgrounds/<%= campground._id%>?_method=DELETE" method="POST" class="d-inline">
+                            <input class="btn btn-danger btn-sm" type="submit" value="Delete">
+                        </form>
+                    <% } %>
+                </div>
+            </div>
+            <div class="m-3 bg-light comments-bg">
+                <div class="float-right m-3">
+                    <a href="/campgrounds/<%= campground._id%>/comments/new" class="btn btn-success">Add New Comment</a>
+                </div>
+                <hr>
+                <div class="d-inline-flex p-2 flex-row flex-wrap">
+                    <% campground.comments.forEach((comment) => {%>
+                        <div class="card m-3">
+                            <div class="card-body">
+                                <div class="float-right ml-2 text-right">
+                                    <div class="">
+                                        <% for(let i = comment.vote; i > 0; i--) { %>
+                                            <span class="heart vote" value="1">♥</span>
+                                        <% } %>
+                                        <% for(let i = 5 - comment.vote; i > 0; i--) { %>
+                                            <span class="heart" value="1">♥</span>
+                                        <% } %>
+                                    </div>
+                                    <span class="font-weight-lighter text-muted align-middle date">
+                                        <% var date = new Date(comment.created); %>
+                                        <%= date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear()%>
+                                    </span>
+                                </div>
+                                <h5 class="card-title overflow-hidden"><%= comment.author.username%></h5>
+                                <p class="card-text"><%= comment.text%></p>
+                                <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
+                                    <a href="/campgrounds/<%= campground._id%>/comments/<%= comment._id%>/edit" 
+                                        class="btn btn-warning text-muted btn-sm">
+                                        EDIT
+                                    </a>
+                                    <form action="/campgrounds/<%= campground._id%>/comments/<%= comment._id%>?_method=DELETE" 
+                                        method="POST" class="d-inline">
+                                        <input class="btn btn-danger btn-sm" type="submit" value="Delete">
+                                    </form>
+                                <% } %>
+                            </div>
+                        </div>
+                    <% });%>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include ('../partials/footer') %>
